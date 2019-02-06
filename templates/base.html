@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Appointment Reminder{% endblock %}</title>
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="container center">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>
