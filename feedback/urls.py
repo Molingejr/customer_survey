@@ -6,4 +6,6 @@ from . import views
 app_name = 'feedback'
 urlpatterns = [
     path('', views.home, name='home'),
+    path('formA', views.save_first_form, name='formA'),
+    path('formB', views.save_second_form, name='formB')
 ]

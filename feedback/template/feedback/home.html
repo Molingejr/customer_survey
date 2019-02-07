@@ -7,11 +7,16 @@
     <div>
         <br/><br/><br/><br/><br/><br/><br/>
         <div>
-            <h1 class="display-1">Customer Survey</h1>
+            {% if user.is_authenticated %}
+                <h1 class="display-2">Welcome {{ user.username }}</h1>
+                <p class="lead"><h4>Your experience with our service is of high importance to us</h4></p>
+            {% else %}
+                <h1 class="display-1">Customer Survey</h1>
+                <p class="lead"><h4>Your experience with our service is of high importance to us</h4></p>
+            {% endif %}
 
-            <p class="lead"><h4>Your experience with our service is of high importance to us</h4></p>
             <div>
-                <a href="#"><button class="btn-large blue-grey">Take Survey</button></a>
+                <a href="{% url "feedback:formA" %}"><button class="btn-large blue-grey">Take Survey</button></a>
             </div>
         </div>
 

@@ -2,10 +2,9 @@
 <head>
     {% include 'material/includes/material_css.html' %}
     {% include 'material/includes/material_js.html' %}
-
-
 </head>
 <body>
+<div class="navbar-fixed">
     <nav class="nav">
     <div class="nav-wrapper blue-grey">
       <a href="{% url 'feedback:home' %}" class="brand-logo">
@@ -23,7 +22,7 @@
       </ul>
     </div>
   </nav>
-
+</div>
   <ul class="sidenav" id="mobile-view">
     <li><a href="{% url 'feedback:home' %}"><i class="material-icons">home</i> Home</a></li>
       {% if user.is_authenticated %}
@@ -37,19 +36,8 @@
 
 
 <script>
-        $('.modal-trigger').leanModal();
-        $('select').material_select();
-        $(".button-collapse").sideNav();
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems, options);
-        });
-
-      // Or with jQuery
-
         $(document).ready(function(){
-            $('.sidenav').sidenav();
+            $('.sidenav-trigger').sidenav();
         });
     </script>
 </body>

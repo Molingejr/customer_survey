@@ -13,7 +13,7 @@ class Customer(models.Model):
 
 class Answer(models.Model):
     """Schema to hold question answers"""
-    customer_answer = models.IntegerField()
+    customer_answer = models.CharField(max_length=50)
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='answers'
     )
