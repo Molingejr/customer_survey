@@ -1,14 +1,13 @@
 from django import forms
-from django.forms import ModelForm
 
 
-class FeedBackFormA(ModelForm):
+class FeedBackFormA(forms.Form):
     """First feedback form"""
     option1 = forms.RadioSelect()
     option2 = forms.RadioSelect()
 
 
-class FeedBackFormB(ModelForm):
+class FeedBackFormB(forms.Form):
     """Second feedback form"""
     option3 = forms.RadioSelect()
     option4 = forms.RadioSelect()

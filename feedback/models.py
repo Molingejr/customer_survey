@@ -5,7 +5,7 @@ class Customer(models.Model):
     """Schema to hold customer data"""
     name = models.CharField(max_length=50)
     email = models.EmailField()
-    cellphone = models.CharField()
+    cellphone = models.CharField(max_length=20)
 
     def __str__(self):
         return "{} {}".format(self.name, self.email)
@@ -13,7 +13,7 @@ class Customer(models.Model):
 
 class Answer(models.Model):
     """Schema to hold question answers"""
-    customer_answer = models.IntegerField(max_length=2)
+    customer_answer = models.IntegerField()
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='answers'
     )
@@ -24,7 +24,7 @@ class Answer(models.Model):
 
 class Note(models.Model):
     """Schema to hold notes"""
-    title = models.CharField()
+    title = models.CharField(max_length=50)
     content = models.TextField()
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='notes'

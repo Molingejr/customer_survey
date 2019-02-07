@@ -3,7 +3,7 @@ from . import views
 
 """Register our all url paths for our app"""
 
-app_name = 'reminder'
+app_name = 'feedback'
 urlpatterns = [
     path('', views.home, name='home'),
 ]

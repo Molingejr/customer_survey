@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 import feedback.urls
+import account.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(
-        feedback.urls, namespace='reminder'
+        feedback.urls, namespace='feedback'
+    )),
+    path('', include(
+            account.urls, namespace='account'
     ))
 ]

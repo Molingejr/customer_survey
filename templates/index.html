@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Appointment Reminder{% endblock %}</title>
-    {# Load the tag library #}
-    {% load bootstrap4 %}
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
+    <title>{% block title %}Customer Survey{% endblock %}</title>
 
-
+    {% include 'material/includes/material_css.html' %}
+    {% include 'material/includes/material_js.html' %}
     {% block head %}{% endblock %}
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container center">
         {% block content %}
         {% endblock content %}

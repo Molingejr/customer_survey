@@ -3,23 +3,16 @@
     Home
 {% endblock %}
 
-{% block head %}
-    {# Load the tag library #}
-    {% load bootstrap4 %}
-
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery='full' %}
-
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
-{% endblock %}
 {% block content %}
     <div>
-        <br/><br/><br/>
-        <div class="jumbotron"><br/><br/><h1>Customer Survey</h1><br/><br/></div>
+        <br/><br/><br/><br/><br/><br/><br/>
         <div>
-            <a href="{% url '' %}"><button class="btn-large">Take Survey</button></a>
+            <h1 class="display-1">Customer Survey</h1>
+
+            <p class="lead"><h4>Your experience with our service is of high importance to us</h4></p>
+            <div>
+                <a href="#"><button class="btn-large blue-grey">Take Survey</button></a>
+            </div>
         </div>
 
     </div>
