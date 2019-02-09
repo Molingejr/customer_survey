@@ -5,6 +5,9 @@ ACCOUNT_SID = "ACbb2e1d788c2f357359a6875f422e38fe"
 AUTH_TOKEN = "2061c3f5e1388f8cec7cd5e02d9fa0e9"
 SENDER_TEL = "+14242215553"
 
+# Server URL
+SERVER_URL = "http://127.0.0.1:8000/"
+
 
 def send_sms(receiver, sender, message):
     """
@@ -26,5 +29,6 @@ def send_survey_link(customer):
     Provide our send message function with required arguments for sending sms
     :param customer: Contains our current saved customer object
     """
-    message = ""
-    send_sms(customer.cellphone, SENDER_TEL, message)
+    contents = "Fill our customer survey form by clicking this link\n"
+    message = "{}{}formA?email={}".format(contents, SERVER_URL, customer.email)
+    send_sms(str(customer.cellphone), SENDER_TEL, message)

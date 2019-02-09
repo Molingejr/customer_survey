@@ -3,6 +3,7 @@ from django.views.generic import ListView
 
 from .forms import FeedBackFormA, FeedBackFormB, CustomerForm
 from .models import Customer, Answer, Note
+from .sms import send_survey_link
 
 
 def home(request):
@@ -12,9 +13,9 @@ def home(request):
 
 def save_first_form(request):
     """
-        View function to handle our create appointment form
-        :param request: Contains our request object
-        """
+    View function to handle our create appointment form
+    :param request: Contains our request object
+    """
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
 
@@ -97,9 +98,15 @@ def create_survey(request):
 
         # check whether it's valid:
         if form.is_valid():
-            # Todo: Ensure customer is not saved more than once
-            form.save()
+            # Try to see if customer already exist and save otherwise
+            try:
+                Customer.objects.get(email=form.data['email'])
+            except Exception:
+                form.save()
 
+            # Get customer and send message to customer
+            customer = Customer.objects.get(email=form.data['email'])
+            send_survey_link(customer)
         # Redirect to our customer list
         return redirect(reverse('feedback:customers'))
     else:
