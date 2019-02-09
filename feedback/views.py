@@ -28,6 +28,7 @@ def save_first_form(request):
             customer = Customer.objects.get(email=form.data['email'])
             answer = Answer()
             answer.customer_answer = form.data['experience']
+            answer.comment = None
 
             answer.customer = customer
             answer.save()
@@ -66,6 +67,7 @@ def save_second_form(request):
             answer = Answer()
 
             answer.customer_answer = form.data['experience']
+            answer.comment = form.data['comment']
 
             answer.customer = customer
             answer.save()
@@ -113,3 +115,45 @@ def create_survey(request):
         form = CustomerForm()
 
     return render(request, 'customer_form.html', {'form': form})
+
+
+def customer_edit(request, customer_email=None):
+    """
+        This function sends renders a form and updates customer information on the database.
+        :param request: Contains request Object
+    """
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = CustomerForm(request.POST)
+
+        # check whether it's valid:
+        if form.is_valid():
+            # Try to see if customer already exist and save otherwise
+            try:
+                Customer.objects.get(email=form.data['email'])
+            except Exception:
+                form.save()
+
+            # Get customer and send message to customer
+            customer = Customer.objects.get(email=form.data['email'])
+            customer.name = form.data['name']
+            customer.email = form.data['email']
+            customer.cellphone = form.data['cellphone']
+            customer.save()
+
+        # Redirect to our customer list
+        return redirect(reverse('feedback:customers'))
+    else:
+        customer = Customer.objects.get(email=customer_email)
+        form = CustomerForm(initial={"name": customer.name, "email": customer.email,
+                                     "cellphone": customer.cellphone})
+
+    return render(request, 'customer_edit_form.html', {'form': form})
+
+
+def customer_survey(request, customer_email=None):
+    customer = Customer.objects.get(email=customer_email)
+    answers = Answer.objects.filter(customer=customer)
+    notes = Note.objects.filter(customer=customer)
+    return render(request, 'customer_survey_details.html', {'answers': answers, 'notes': notes})

@@ -12,11 +12,11 @@ class Customer(models.Model):
         return "{} {}".format(self.name, self.email)
 
 
-# Todo: Add Comment field to Answer model
 # Todo: Link all customer answers for each complete survey
 class Answer(models.Model):
     """Schema to hold question answers"""
     customer_answer = models.CharField(max_length=50)
+    comment = models.TextField()
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='answers'
     )
