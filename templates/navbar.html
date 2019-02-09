@@ -7,10 +7,9 @@
 <div class="navbar-fixed">
     <nav class="nav">
     <div class="nav-wrapper blue-grey">
-      <a href="{% url 'feedback:home' %}" class="brand-logo">
-          <i class="material-icons">today</i>Customer Survey
-      <a href="#" data-target="mobile-view" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
+      <a href="{% url 'feedback:home' %}" class="left brand-logo">
+          <i class="material-icons">today</i><h6>Customer Survey</h6></a>
+      <ul class="right">
         <li><a href="{% url 'feedback:home' %}"><i class="material-icons">home</i></a></li>
         {% if user.is_authenticated %}
             <li><a href="{% url 'feedback:customers' %}">Customers</a></li>
@@ -23,23 +22,6 @@
     </div>
   </nav>
 </div>
-  <ul class="sidenav" id="mobile-view">
-    <li><a href="{% url 'feedback:home' %}"><i class="material-icons">home</i> Home</a></li>
-      {% if user.is_authenticated %}
-            <li><a href="{% url 'account:logout' %}">Logout</a></li>
-      {% else %}
-            <li><a href="{% url 'account:log_in' %}">Login</a></li>
-            <li><a href="{% url 'account:signup' %}">Signup</a></li>
-      {% endif %}
-
-  </ul>
-
-
-<script>
-        $(document).ready(function(){
-            $('.button-collapse').sidenav();
-        });
-    </script>
 </body>
 
 </html>
