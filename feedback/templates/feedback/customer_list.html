@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+{% load material_form %}
+{% block title %}
+    Customer list
+{% endblock %}
+
+{% block content %}
+    <h2>List of Customers for survey</h2>
+    <ul>
+        {% for customer in customer_list reversed %}
+            <li class="card blue-grey">
+                <div class="card-content white-text">
+                    <span class="card-title">{{customer.name}}</span>
+                    <p>Email: {{ customer.email }}</p>
+                    <p>Tel: {{ customer.cellphone }} </p>
+                </div>
+            </li>
+            {% empty %}
+            <li>No customers yet</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

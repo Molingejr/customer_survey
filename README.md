@@ -2,7 +2,7 @@
 Customer fill out a form to rate his/her experience for the day
 
 ## Installation
-Install Python 3.6
+Install Python 3.6 for your system
 
 Create a python virtual environment
 ```
@@ -13,7 +13,7 @@ Install Dependencies
 source venv/bin/activate
 pip install -r requirements
 ```
-Run migrations with 
+Run migrations
 ```
 cd survey
 python manage.py migrate
