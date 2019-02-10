@@ -6,7 +6,7 @@
 
 {% block content %}
     <h2>Survey Results for Customer</h2>
-    <a href="{% url "feedback:customer_survey" customer.email %}">
+    <a href="{% url "feedback:send_survey" customer.email %}">
                     <button class="btn-large">Send Survey</button>
      </a>
      <a href="{% url "feedback:customer_notes" customer.email %}">

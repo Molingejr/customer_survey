@@ -12,7 +12,6 @@ class Customer(models.Model):
         return "{} {}".format(self.name, self.email)
 
 
-# Todo: Link all customer answers for each complete survey
 class Answer(models.Model):
     """Schema to hold question answers"""
     customer_answer = models.CharField(max_length=50)
@@ -20,6 +19,7 @@ class Answer(models.Model):
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='answers'
     )
+    survey_id = models.IntegerField(default=1)
 
     def __str__(self):
         return self.customer_answer

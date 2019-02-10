@@ -31,13 +31,20 @@ def save_first_form(request):
             answer.comment = ""
 
             answer.customer = customer
+            # Try to get the latest survey id
+            try:
+                latest_id = Answer.objects.latest('survey_id')
+                answer.survey_id = latest_id.survey_id + 1
+            except Exception as exp:
+                answer.survey_id = 1
+
             answer.save()
 
             # redirect to a new URL:
             if answer.customer_answer == "I am very satisfied and will refer my friends and family to you":
                 return redirect("http://www.mdanswerx.com/happycustomer")
             elif answer.customer_answer == "I am not satisfied":
-                return redirect(reverse("feedback:formB") + f"?email={form.data['email']}")
+                return redirect(reverse("feedback:formB") + f"?email={form.data['email']}&survey_id={answer.survey_id}")
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -63,6 +70,7 @@ def save_second_form(request):
         if form.is_valid():
             # Retrieve email from query parameters
             email = request.GET['email']
+            survey_id = request.GET['survey_id']
             customer = Customer.objects.get(email=email)
             answer = Answer()
 
@@ -70,7 +78,14 @@ def save_second_form(request):
             answer.comment = form.data['comment']
 
             answer.customer = customer
+            answer.survey_id = survey_id
             answer.save()
+
+            # try:
+            #     from .mail import send_email
+            #     send_email(customer, answer.survey_id)
+            # except Exception as exp:
+            #     print(exp)
 
             # redirect to a new URL:
             return HttpResponse("<h2>Thank you for participating</h2>")
@@ -160,7 +175,9 @@ def customer_survey(request, customer_email=None):
     :return: render customer survey page
     """
     customer = Customer.objects.get(email=customer_email)
-    answers = Answer.objects.filter(customer=customer)
+    answers = Answer.objects.filter(customer=customer).order_by('survey_id')
+
+    print(answers)
     return render(request, 'customer_survey_details.html', {'answers': answers, 'customer': customer})
 
 
@@ -213,3 +230,4 @@ def send_survey(request, customer_email):
     """
     customer = Customer.objects.get(email=customer_email)
     send_survey_link(customer)
+    return redirect(reverse('feedback:customer_survey', args=[customer_email]))
