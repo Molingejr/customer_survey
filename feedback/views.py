@@ -28,7 +28,7 @@ def save_first_form(request):
             customer = Customer.objects.get(email=form.data['email'])
             answer = Answer()
             answer.customer_answer = form.data['experience']
-            answer.comment = None
+            answer.comment = ""
 
             answer.customer = customer
             answer.save()

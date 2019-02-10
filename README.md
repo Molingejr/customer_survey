@@ -37,9 +37,13 @@ The Tel field of the schedule appointment form will require that you put your co
 e.g. +14212215453
 
 ### Server URL
-The app make use of `http://127.0.0.1:8000/` where this is accessible only on your local machine and needs extra server to
-interface with the outside world.
+The app make use of `http://127.0.0.1:8000/` where this is accessible only on your local machine and needs extra server 
+to interface with the outside world.
 
-Go to `survey/feedback/sms` and change the `SERVER_URL` to your server url which interface with the outside world.
-
+If your testing this application over a wifi network per say, go to `survey/feedback/sms` and change the `SERVER_URL`
+ to your server url which interface with the outside world. Also update the ALLOWED_HOSTS list to include your ip.
 This will allow users to open the link to the survey form of our application through the sent link on their devices. 
+Run the application with ` python manage.py runserver ip_address:8000
+`
+All these is not needed if you have deployed and serving the application through servers like NGINX
+
