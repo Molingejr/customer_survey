@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.views.generic import ListView
 
-from .forms import FeedBackFormA, FeedBackFormB, CustomerForm
+from .forms import FeedBackFormA, FeedBackFormB, CustomerForm, NoteForm
 from .models import Customer, Answer, Note
 from .sms import send_survey_link
 
@@ -73,7 +73,7 @@ def save_second_form(request):
             answer.save()
 
             # redirect to a new URL:
-            return redirect('feedback:home')
+            return HttpResponse("<h2>Thank you for participating</h2>")
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -110,7 +110,7 @@ def create_survey(request):
             customer = Customer.objects.get(email=form.data['email'])
             send_survey_link(customer)
         # Redirect to our customer list
-        return redirect(reverse('feedback:customers'))
+        return redirect('feedback:customers')
     else:
         form = CustomerForm()
 
@@ -143,7 +143,7 @@ def customer_edit(request, customer_email=None):
             customer.save()
 
         # Redirect to our customer list
-        return redirect(reverse('feedback:customers'))
+        return redirect('feedback:customers')
     else:
         customer = Customer.objects.get(email=customer_email)
         form = CustomerForm(initial={"name": customer.name, "email": customer.email,
@@ -153,7 +153,63 @@ def customer_edit(request, customer_email=None):
 
 
 def customer_survey(request, customer_email=None):
+    """
+    Get survey results for a customer
+    :param request: Request object
+    :param customer_email: customer's email
+    :return: render customer survey page
+    """
     customer = Customer.objects.get(email=customer_email)
     answers = Answer.objects.filter(customer=customer)
+    return render(request, 'customer_survey_details.html', {'answers': answers, 'customer': customer})
+
+
+def customer_notes(request, customer_email=None):
+    """
+    Get all notes for a customer
+    :param request: Request object
+    :param customer_email: customer's email
+    :return: render customer notes page
+    """
+    customer = Customer.objects.get(email=customer_email)
     notes = Note.objects.filter(customer=customer)
-    return render(request, 'customer_survey_details.html', {'answers': answers, 'notes': notes})
+    return render(request, 'customer_note_list.html', {'notes': notes, 'customer': customer})
+
+
+def add_note(request, customer_email=None):
+    """
+    Get all notes for a customer
+    :param request: Request object
+    :param customer_email: customer's email
+    :return: render page to add notes to customer profile
+    """
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = NoteForm(request.POST)
+
+        # check whether it's valid:
+        if form.is_valid():
+            # Get customer and send message to customer
+            customer = Customer.objects.get(email=customer_email)
+            note = Note(title=form.data['title'], content=form.data['content'])
+            note.customer = customer
+            note.save()
+
+        # Redirect to our customer list
+        return redirect(reverse('feedback:customer_notes', args=[customer_email]))
+    else:
+        form = NoteForm()
+
+    return render(request, 'customer_note_form.html', {'form': form})
+
+
+def send_survey(request, customer_email):
+    """
+    Get all notes for a customer
+    :param request: Request object
+    :param customer_email: customer's email
+    :return: render page to add notes to customer profile
+    """
+    customer = Customer.objects.get(email=customer_email)
+    send_survey_link(customer)

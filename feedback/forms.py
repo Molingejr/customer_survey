@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customer
+from .models import Customer, Note
 
 
 OPTIONS = [
@@ -50,3 +50,11 @@ class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'email', 'cellphone']
+
+
+class NoteForm(forms.ModelForm):
+    """Use to add notes to customer profile"""
+
+    class Meta:
+        model = Note
+        fields = ['title', 'content']

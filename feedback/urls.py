@@ -16,5 +16,11 @@ urlpatterns = [
     path(r'customer/edit/<customer_email>', login_required(views.customer_edit,
                                                            login_url='account:log_in'), name='customer_edit'),
     path(r'customer/survey/<customer_email>', login_required(views.customer_survey,
-                                                             login_url='account:log_in'), name='customer_survey')
+                                                             login_url='account:log_in'), name='customer_survey'),
+    path(r'customer/notes/<customer_email>', login_required(views.customer_notes,
+                                                            login_url='account:log_in'), name='customer_notes'),
+    path(r'customer/add_note/<customer_email>', login_required(views.add_note,
+                                                               login_url='account:log_in'), name='add_note'),
+    path(r'customer/send_survey/<customer_email>', login_required(views.send_survey,
+                                                                  login_url='account:log_in'), name='send_survey')
 ]

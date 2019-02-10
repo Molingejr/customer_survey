@@ -1,13 +1,11 @@
+{% extends 'index.html' %}
 {% load material_form %}
-
-<title>Survey Form</title>
+{% block title %}Customer Form{% endblock %}
 
 {% block head %}
-    {% include 'material/includes/material_css.html' %}
-    {% include 'material/includes/material_js.html' %}
     <style>
         .container {
-          height: 300px;
+          height: 200px;
           position: relative;
         }
 
@@ -23,13 +21,12 @@
 {% endblock %}
 
 {% block content %}
-    <br/><br/><br/><br/>
     <div class="card center container white-text">
         <div class="card-title blue-grey" align="center">
-            <br/><span style="font-size: xx-large">Fill our Customer Survey form</span>
+            <br/><span style="font-size: xx-large">Add Note to Customer</span>
         </div>
-        <div class="card-content blue-grey" style="font-size: large">This is for customers only</div>
-        <form method="POST" class="card-panel left-align">
+        <div class="card-content blue-grey" style="font-size: large">Fill in the note details</div>
+        <form method="POST" class="card-panel">
             {% csrf_token %}
             {% form form=form %}{% endform %} <br/>
             <button type="submit" name="_submit" class="btn btn-large blue-grey">Submit</button>

@@ -1,13 +1,19 @@
 {% extends 'index.html' %}
 {% load material_form %}
 {% block title %}
-    Customer list
+    Survey Results
 {% endblock %}
 
 {% block content %}
     <h2>Survey Results for Customer</h2>
+    <a href="{% url "feedback:customer_survey" customer.email %}">
+                    <button class="btn-large">Send Survey</button>
+     </a>
+     <a href="{% url "feedback:customer_notes" customer.email %}">
+                    <button class="btn-large">View Notes</button>
+     </a>
     <ul>
-        {% for answer in answers reversed %}
+        {% for answer in answers %}
             <li class="card blue-grey">
                 <div class="card-content white-text">
                     <span class="card-title">{{answer.customer_answer}}</span>
@@ -16,20 +22,6 @@
             </li>
             {% empty %}
             <li>No surveys yet</li>
-        {% endfor %}
-    </ul>
-
-    <h2>Notes added for this Customer</h2>
-    <ul>
-        {% for note in notes reversed %}
-            <li class="card blue-grey">
-                <div class="card-content white-text">
-                    <span class="card-title">{{note.title}}</span>
-                    <p>{{ note.content }}</p>
-                </div>
-            </li>
-            {% empty %}
-            <li>No Notes yet</li>
         {% endfor %}
     </ul>
 {% endblock %}

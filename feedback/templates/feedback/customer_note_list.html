@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+{% load material_form %}
+{% block title %}
+    Customer Notes
+{% endblock %}
+
+{% block content %}
+   <h2>Notes added for this Customer</h2>
+    <a href="{% url 'feedback:add_note' customer.email %}" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+    <ul>
+        {% for note in notes reversed %}
+            <li class="card blue-grey">
+                <div class="card-content white-text">
+                    <span class="card-title">{{note.title}}</span>
+                    <p>{{ note.content }}</p>
+                </div>
+            </li>
+            {% empty %}
+            <li>No Notes yet</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
