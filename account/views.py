@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import SignUpForm, LoginForm
+from feedback.models import Company
 
 
 def signup(request):
@@ -9,6 +10,11 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
+
+            # Create the user's company which will be used to create Customers
+            company = Company(name=form.cleaned_data.get('company'))
+            company.save()
+
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
