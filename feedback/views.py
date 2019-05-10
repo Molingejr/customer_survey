@@ -117,15 +117,16 @@ def create_survey(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = CustomerForm(request.POST)
-        user = User.objects.get(request.user)
+
         # check whether it's valid:
         if form.is_valid():
             # Try to see if customer already exist and save otherwise
             try:
                 Customer.objects.get(email=form.data['email'])
             except Exception:
-                form.company = user.company
-                form.save()
+                customer_obj = Customer(name=form.data['name'], email=form.data['email'], cellphone=form.data['cellphone'])
+                customer_obj.company = request.user.company
+                customer_obj.save()
 
             # Get customer and send message to customer
             customer = Customer.objects.get(email=form.data['email'])
@@ -142,6 +143,7 @@ def customer_edit(request, customer_email=None):
     """
         This function sends renders a form and updates customer information on the database.
         :param request: Contains request Object
+        :param customer_email: Original email of the customer being edited
     """
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -150,14 +152,8 @@ def customer_edit(request, customer_email=None):
 
         # check whether it's valid:
         if form.is_valid():
-            # Try to see if customer already exist and save otherwise
-            try:
-                Customer.objects.get(email=form.data['email'])
-            except Exception:
-                form.save()
-
-            # Get customer and send message to customer
-            customer = Customer.objects.get(email=form.data['email'])
+            # save customer's new information
+            customer = Customer.objects.get(email=customer_email)
             customer.name = form.data['name']
             customer.email = form.data['email']
             customer.cellphone = form.data['cellphone']
@@ -183,7 +179,6 @@ def customer_survey(request, customer_email=None):
     customer = Customer.objects.get(email=customer_email)
     answers = Answer.objects.filter(customer=customer).order_by('survey_id')
 
-    print(answers)
     return render(request, 'customer_survey_details.html', {'answers': answers, 'customer': customer})
 
 
