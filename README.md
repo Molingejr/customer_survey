@@ -16,6 +16,7 @@ pip install -r requirements
 Run migrations
 ```
 cd survey
+python manage.py makemigrations
 python manage.py migrate
 ```
 Create superuser for admin account

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.views.generic import ListView
+from django.contrib.auth.models import User
 
 from .forms import FeedBackFormA, FeedBackFormB, CustomerForm, NoteForm
 from .models import Customer, Answer, Note
 from .sms import send_survey_link
+from account.models import Company
 
 
 def home(request):
@@ -101,6 +103,9 @@ class CustomerListView(ListView):
     """Render customer list"""
     model = Customer
 
+    def get_queryset(self):
+        return Customer.objects.filter(company=self.request.user.company)
+
 
 def create_survey(request):
     """
@@ -112,13 +117,14 @@ def create_survey(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = CustomerForm(request.POST)
-
+        user = User.objects.get(request.user)
         # check whether it's valid:
         if form.is_valid():
             # Try to see if customer already exist and save otherwise
             try:
                 Customer.objects.get(email=form.data['email'])
             except Exception:
+                form.company = user.company
                 form.save()
 
             # Get customer and send message to customer

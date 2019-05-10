@@ -1,13 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-
-
-class Company(models.Model):
-    """Schema to hold company data"""
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return "{}".format(self.name)
+from account.models import Company
 
 
 class Customer(models.Model):

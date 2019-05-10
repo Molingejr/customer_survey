@@ -32,7 +32,8 @@
         <div class="card-content blue-grey" style="font-size: large">This is for the Buisness owner only</div>
         <form method="POST" class="card-panel">
             {% csrf_token %}
-            {% form form=form %}{% endform %} <br/>
+            {% form form=company_form %}{% endform %}
+            {% form form=user_form %}{% endform %} <br/>
             <button type="submit" name="_submit" class="btn btn-large blue-grey">Submit</button>
 
         </form>
