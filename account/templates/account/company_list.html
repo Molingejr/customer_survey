@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% load material_form %}
+{% block title %}
+    Customer list
+{% endblock %}
+
+{% block content %}
+    <h2>List of Registered Companies</h2>
+    <ul>
+        {% for company in company_list reversed %}
+            <li class="card blue-grey">
+                <div class="card-content white-text">
+                    <span class="card-title">{{company.name}}</span>
+                    <p>User: {{ company.user }}</p>
+                </div>
+            </li>
+            {% empty %}
+            <li>No Companies</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

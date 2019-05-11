@@ -7,7 +7,14 @@
     <div>
         <br/><br/><br/><br/><br/><br/><br/>
         <div>
-            {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <h1 class="display-2">Welcome {{ user.username }}</h1>
+                <p class="lead"><h4>Our goal is to ensure our users are well satisfied with our services</h4></p>
+                <p class="lead"><h5>Use our admin dashboard to check statistics</h5></p>
+                <div>
+                    <a href="{% url "account:companies" %}"><button class="btn-large blue-grey">View Companies</button></a>
+                </div>
+            {% elif user.is_authenticated %}
                 <h1 class="display-2">Welcome {{ user.username }}</h1>
                 <p class="lead"><h4>Our goal is to ensure our users are well satisfied with our services</h4></p>
                 <div>

@@ -102,6 +102,8 @@ class CustomerListView(ListView):
     model = Customer
 
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Customer.objects.all()
         return Customer.objects.filter(company=self.request.user.company)
 
 
@@ -227,6 +229,8 @@ def send_survey(request, customer_email):
     :param customer_email: customer's email
     :return: render page to add notes to customer profile
     """
+    if request.user.is_superuser:
+        return redirect('account:no_permission')
     customer = Customer.objects.get(email=customer_email)
     send_survey_link(customer)
     return redirect(reverse('feedback:customer_survey', args=[customer_email]))

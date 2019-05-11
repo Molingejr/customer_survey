@@ -13,6 +13,7 @@
                     <span class="card-title">{{customer.name}}</span>
                     <p>Email: {{ customer.email }}</p>
                     <p>Tel: {{ customer.cellphone }} </p>
+                    <p>Company: {{ customer.company }}</p>
                 </div>
                 <a href="{% url "feedback:customer_edit" customer.email %}">
                     <button class="btn-large">Edit</button>

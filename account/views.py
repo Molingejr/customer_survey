@@ -2,6 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.views.generic import ListView
+
+from django.utils.decorators import method_decorator
+from .decorators import superuser_required
 
 from .forms import SignUpForm, LoginForm, CompanyForm
 from .models import Company
@@ -38,7 +42,6 @@ def log_in(request):
         form = LoginForm(request.POST)
         username = request.POST.get('name')
         password = request.POST.get('password')
-        print(username, password)
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
@@ -60,3 +63,19 @@ def user_logout(request):
     """Logout the user"""
     logout(request)
     return redirect('feedback:home')
+
+
+@method_decorator(superuser_required, name='dispatch')
+class CompanyListView(ListView):
+    """Render customer list"""
+    model = Company
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Company.objects.all()
+        return None
+
+
+def no_permission(request):
+    """When user is not authorized, he see's this page"""
+    return render(request, 'permission.html')

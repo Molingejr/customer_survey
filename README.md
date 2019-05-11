@@ -66,3 +66,16 @@ secure apps.
 NB: You can also use email services like **sendgrid** rather than your personal gmail. In this case you will have to
 change the *EMAIL_BACKEND* in settings.
 
+
+### Super user privileges
+After creating the superuser. If you want to enjoy some superuser privileges in the application,
+you need to give the superuser a company as company is not created once the superuser is created. To do so:
+- Login in the Django admin dashboard and go to `http://127.0.0.1:8000/admin/auth/user/`. If your using a domain name,
+it in the place of http://127.0.0.1:8000.
+- Choose your superuser from the list of users.
+- Go to the bottom of the page where you will see `Company` and set the `name` field.
+
+Then login into to our survey application with the superuser credentials. Enjoy other facilities.
+Such Facilities involves:
+- View all registered company
+- View all customers in the database
