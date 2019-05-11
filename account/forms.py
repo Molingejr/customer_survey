@@ -24,7 +24,7 @@ class LoginForm(forms.Form):
 
 class CompanyForm(forms.Form):
     """Hold data for the user's company"""
-    company = forms.CharField(max_length=50, help_text='Company to which you belong', required=True)
+    company = forms.CharField(max_length=50, help_text='Company which you own', required=True)
 
     class Meta:
         model = Company
