@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.views.generic import ListView
-from django.contrib.auth.models import User
 
 from .forms import FeedBackFormA, FeedBackFormB, CustomerForm, NoteForm
 from .models import Customer, Answer, Note
 from .sms import send_survey_link
-from account.models import Company
 
 
 def home(request):
