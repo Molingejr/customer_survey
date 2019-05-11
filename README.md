@@ -49,3 +49,20 @@ Run the application with ` python manage.py runserver ip_address:8000`
 
 All these is not needed if you have deployed and serving the application through servers like NGINX
 
+
+### Email sending settings
+To enable password reset to send reset links to the user's corresponding email address, you need to do:
+- Go to *survey/config/settings.py* where you have
+```
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+```
+- Fill in your email in EMAIL_HOST_USER and your mail password in EMAIL_HOST_PASSWORD.
+This is not advice to do so directly in the code. So set up environment variables EMAIL_USER and EMAIL_PASSWORD.
+
+- Gmail usually block external apps from communicating with their service. So, go to your mail account and allow less
+secure apps.
+
+NB: You can also use email services like **sendgrid** rather than your personal gmail. In this case you will have to
+change the *EMAIL_BACKEND* in settings.
+
