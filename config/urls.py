@@ -17,8 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
 import feedback.urls
 import account.urls
+import appointment.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +31,9 @@ urlpatterns = [
     )),
     path('', include(
             account.urls, namespace='account'
+    )),
+    path('', include(
+        appointment.urls, namespace='appointment'
     )),
     path(r'password-reset/', auth_views.PasswordResetView.as_view(
         template_name="password_reset.html"
@@ -40,4 +47,6 @@ urlpatterns = [
     path(r'password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name="password_reset_complete.html"
     ), name='password_reset_complete'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT, show_indexes=True)
+
+urlpatterns += staticfiles_urlpatterns()

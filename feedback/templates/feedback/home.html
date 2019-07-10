@@ -23,8 +23,9 @@
             {% else %}
                 <h1 class="display-1">Customer Survey</h1>
                 <p class="lead"><h4>Customers experience with our service is of high importance to us</h4></p>
-                <div>
+                <div><br/>
                     <a href="{% url "account:log_in" %}"><button class="btn-large blue-grey">Get Started</button></a>
+                    <a href="{% url "appointment:schedule_appointment" %}"><button class="btn-large blue-grey">Schedule Appointment</button></a>
                 </div>
             {% endif %}
         </div>

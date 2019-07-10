@@ -1,5 +1,8 @@
 # Customer Survey App
-Customer fill out a form to rate his/her experience for the day
+Company owner fills creates a form and send link to client through sms.
+Customer opens link and fill out a form to rate his/her experience for the day.
+
+Customer can also schedule an appointment.
 
 ## Installation
 Install Python 3.6 for your system
@@ -15,7 +18,7 @@ pip install -r requirements
 ```
 Run migrations
 ```
-cd survey
+cd customer_survey
 python manage.py makemigrations
 python manage.py migrate
 ```
