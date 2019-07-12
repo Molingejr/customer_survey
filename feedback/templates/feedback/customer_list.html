@@ -15,10 +15,10 @@
                     <p>Tel: {{ customer.cellphone }} </p>
                     <p>Company: {{ customer.company }}</p>
                 </div>
-                <a href="{% url "feedback:customer_edit" customer.email %}">
+                <a href="{% url 'feedback:customer_edit' customer.email %}">
                     <button class="btn-large">Edit</button>
                 </a>
-                <a href="{% url "feedback:customer_survey" customer.email %}">
+                <a href="{% url 'feedback:customer_survey' customer.email %}">
                     <button class="btn-large">View details</button>
                 </a>
 

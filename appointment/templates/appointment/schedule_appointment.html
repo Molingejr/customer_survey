@@ -50,22 +50,21 @@
 
             selectable: true,
 
-            dateClick: function (info) {
-                alert('clicked ' + info.dateStr);
-            }, //https://fullcalendar.io/docs/date-clicking-selecting-demo
+            // dateClick: function (info) {
+            //     alert('clicked ' + info.dateStr);
+            // }, //https://fullcalendar.io/docs/date-clicking-selecting-demo
 
 
             select: function (info) {
-                alert('selected ' + info.startStr + ' to ' + info.endStr);
+                if (confirm("Schedule an Appointment here!" + info.startStr + ' to ' + info.endStr)) {
+                    date_str = info.startStr + "," + info.endStr;
+                    let url = "/appointment/contact"
+                    url =  url + '/' + date_str;
+                    appointment_link = document.createElement('a');
+                    appointment_link.setAttribute('href', url);
+                    appointment_link.click();
+                }
             },
-
-            // events: {
-            //   url: 'http://localhost:8000/get-events.php',
-            //   failure: function() {
-            //     document.getElementById('script-warning').style.display = 'block'
-            //   }
-            // },
-
 
             events: [
                 

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Form{% endblock %}
+{% block head %}
+{% load crispy_forms_tags %}
+    <style>
+        .container {
+          height: 300px;
+          position: relative;
+        }
+
+        .center {
+          margin: 0;
+          position: absolute;
+          top: 35%;
+          left: 50%;
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div>
+    <h2 class="text-primary">ACME Company</h1>
+    <p><b>123 Main office str, Atlanta, GA 30303</b></h3>
+    <p><b>Tel: 678-123-4567</b></p>
+    <h4><a href="#">(Change Location)</a></h4>
+</div>
+    <h4>Great, now just enter your contact details</h4>
+    <br/>
+    <div>
+        <form method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                  {{ form.mobilephone|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                  {{ form.email|as_crispy_field }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  {{ form.firstname|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                  {{ form.lastname|as_crispy_field }}
+                </div>
+              </div>
+              {{ form.notes|as_crispy_field }}
+            <button type="submit" name="_submit" class="btn-primary btn-block btn-lg">BOOK APOINTMENT</button>
+        </form>
+        <br/>
+        <p>Upon booking, an account will automatically be created for you. You can sign back into ACME
+          Company using your email at any time.
+        </p> 
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointment Completed{% endblock %}
+{% block head %}
+    <style>
+        .container {
+          height: 300px;
+          position: relative;
+        }
+
+        .center {
+          margin: 0;
+          position: absolute;
+          top: 35%;
+          left: 50%;
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div>
+    <h2 class="text-primary">ACME Company</h1>
+    <p><b>123 Main office str, Atlanta, GA 30303</b></h3>
+    <p><b>Tel: 678-123-4567</b></p>
+    <h4>Thanks You.</h4>
+    <h4>Your appointment has been confirmed.</h4>
+</div>
+<br/>
+<div>
+    <p><b>Opening Hours:</b></p>
+    <p>Mon: 9am-4pm</p>
+    <p>Wed: 10am-3pm</p>
+    <p>Frid: 9am-12pm</p>
+</div>
+    
+{% endblock %}

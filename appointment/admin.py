@@ -1,3 +1,6 @@
 from django.contrib import admin
+from appointment.models import Contact, Appointment
 
-# Register your models here.
+# We register our models here
+admin.site.register(Contact)
+admin.site.register(Appointment)

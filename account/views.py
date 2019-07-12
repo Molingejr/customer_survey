@@ -40,9 +40,10 @@ def log_in(request):
     """Handles login for admin account"""
     if request.method == "POST":
         form = LoginForm(request.POST)
-        username = request.POST.get('name')
+        email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
+        user = User.objects.get(email=email)
+        user = authenticate(username=user.username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
@@ -51,7 +52,7 @@ def log_in(request):
                 return HttpResponse("Your account was inactive.")
         else:
             print("Someone tried to login and failed.")
-            print("They used username: {} and password: {}".format(username, password))
+            print("They used email: {} and password: {}".format(email, password))
             return HttpResponse("Invalid login details given")
 
     else:

@@ -18,7 +18,7 @@ class SignUpForm(UserCreationForm):
 
 class LoginForm(forms.Form):
     """Our login form for the business owner"""
-    name = forms.CharField(label="Name")
+    email = forms.CharField(label="Email")
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
 
 

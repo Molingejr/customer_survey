@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Customer Survey{% endblock %}</title>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% include 'app_navbar.html' %}
+    <div class="container center">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>
