@@ -1,24 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
-# Create your models here.
 
 class Contact(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     mobilephone = PhoneNumberField()
-    email = models.EmailField()
-    firstname = models.CharField(max_length=25)
-    lastname = models.CharField(max_length=25)
-
+   
     def __str__(self):
-        return "{} {}".format(self.firstname, self.lastname)
+        return "{} {}: {}".format(
+            self.user.first_name, self.user.last_name, self.mobilephone)
 
 class Appointment(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    user = models.ForeignKey(
+    contact = models.ForeignKey(
         Contact, on_delete=models.CASCADE, related_name='contact'
     )
-    notes = models.TextField()
+    notes = models.TextField(blank=True)
 
     def __str__(self):
-        return "{} {} {}".format(self.time, self.subject, self.user)
+        return "{} {} {}".format(self.start_time, self.end_time, self.notes)

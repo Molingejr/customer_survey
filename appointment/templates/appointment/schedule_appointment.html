@@ -58,8 +58,8 @@
             select: function (info) {
                 if (confirm("Schedule an Appointment here!" + info.startStr + ' to ' + info.endStr)) {
                     date_str = info.startStr + "," + info.endStr;
-                    let url = "/appointment/contact"
-                    url =  url + '/' + date_str;
+                    let url = "/appointment/details"
+                    url =  `${url}?start_time=${info.startStr}&end_time=${info.endStr}`
                     appointment_link = document.createElement('a');
                     appointment_link.setAttribute('href', url);
                     appointment_link.click();

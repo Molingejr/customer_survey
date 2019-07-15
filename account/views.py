@@ -42,7 +42,11 @@ def log_in(request):
         form = LoginForm(request.POST)
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
+        except:
+            return HttpResponse("Invalid email or password")
+        
         user = authenticate(username=user.username, password=password)
         if user:
             if user.is_active:

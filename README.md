@@ -4,6 +4,9 @@ Customer opens link and fill out a form to rate his/her experience for the day.
 
 Customer can also schedule an appointment.
 
+### NB:
+Remember to configure email and sms credentials as explained under `Twilio Credentials` and `Email sending settings` below.
+
 ## Installation
 Install Python 3.6 for your system
 

@@ -2,6 +2,7 @@
 
 {% block title %}Appointment Completed{% endblock %}
 {% block head %}
+    {% load static %}
     <style>
         .container {
           height: 300px;
@@ -33,6 +34,10 @@
     <p>Mon: 9am-4pm</p>
     <p>Wed: 10am-3pm</p>
     <p>Frid: 9am-12pm</p>
+</div>
+
+<div>
+  <img src="{% static 'images/location.png' %}">
 </div>
     
 {% endblock %}

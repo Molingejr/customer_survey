@@ -41,13 +41,17 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-6">
-                  {{ form.firstname|as_crispy_field }}
+                <div class="col-4">
+                  {{ form.first_name|as_crispy_field }}
                 </div>
-                <div class="col-6">
-                  {{ form.lastname|as_crispy_field }}
+                <div class="col-4">
+                  {{ form.last_name|as_crispy_field }}
+                </div>
+                <div class="col-4">
+                  {{ form.password|as_crispy_field }}
                 </div>
               </div>
+              
               {{ form.notes|as_crispy_field }}
             <button type="submit" name="_submit" class="btn-primary btn-block btn-lg">BOOK APOINTMENT</button>
         </form>
