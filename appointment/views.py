@@ -59,8 +59,16 @@ def save_appointment_details(request, schedule=None):
             appointment.contact = contact
             appointment.save()
             
-            send_appointment_mail(appointment)  # send appointment details email
-            send_appointment_sms(appointment)   # send appointment details sms 
+            try:
+                send_appointment_mail(appointment)  # send appointment details email
+            except Exception as exp:
+                print(exp)
+            
+            try:
+                send_appointment_sms(appointment)   # send appointment details sms
+            except Exception as exp:
+                print(exp) 
+            
             return redirect('appointment:complete_appointment')
            
     # if a GET (or any other method) we'll create a blank form
