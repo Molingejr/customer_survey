@@ -5,7 +5,7 @@
 {% load crispy_forms_tags %}
     <style>
         .container {
-          height: 300px;
+          height: 400px;
           position: relative;
         }
 
@@ -41,14 +41,11 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-4">
+                <div class="col-6">
                   {{ form.first_name|as_crispy_field }}
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                   {{ form.last_name|as_crispy_field }}
-                </div>
-                <div class="col-4">
-                  {{ form.password|as_crispy_field }}
                 </div>
               </div>
               

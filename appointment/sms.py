@@ -37,5 +37,5 @@ def send_appointment_sms(appointment):
         Location: 123 Main office str, Atlanta, GA 30303
         Tel: 678-123-4567
         """
-    mobilephone = appointment.contact.mobilephone
+    mobilephone = appointment.mobilephone
     send_sms(str(mobilephone), SENDER_TEL, message)

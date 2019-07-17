@@ -1,20 +1,24 @@
-{% extends 'index.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Appointment{% endblock %}
 
 {% block head %}
 <meta charset='utf-8' />
 {% load static %}
-<link rel='stylesheet' href="{% static 'packages/core/main.css' %}">
-<link rel='stylesheet' href="{% static 'packages/daygrid/main.css' %}">
-<link rel='stylesheet' href="{% static 'packages/timegrid/main.css' %}">
-<link rel='stylesheet' href="{% static 'packages/list/main.css' %}">
+<link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://unpkg.com/@fullcalendar/core@4.2.0/main.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@fullcalendar/daygrid@4.2.0/main.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@fullcalendar/timegrid@4.2.0/main.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@fullcalendar/list@4.2.0/main.min.css">
 
-<script src="{% static 'packages/core/main.js' %}"></script>
-<script src="{% static 'packages/interaction/main.js' %}"></script>
-<script src="{% static 'packages/daygrid/main.js' %}"></script>
-<script src="{% static 'packages/timegrid/main.js' %}"></script>
-<script src="{% static 'packages/list/main.js' %}"></script>
+
+<script src="https://unpkg.com/@fullcalendar/core@4.2.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/daygrid@4.2.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/interaction@4.2.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/timegrid@4.2.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/list@4.2.0/main.min.js"></script>
+<script src="https://unpkg.com/@fullcalendar/bootstrap@4.2.0/main.min.js"></script>
+
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -22,8 +26,8 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
-            plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'], // 'bootstrap' ],
-            // themeSystem: 'bootstrap',
+            plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'bootstrap' ],
+            themeSystem: 'bootstrap',
 
             header: {
                 left: 'prev,next today',
@@ -112,20 +116,36 @@
         margin: 40px auto;
         padding: 0 10px;
     }
+    
+    .container {
+        height: 300px;
+        position: relative;
+    }
+
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+
 </style>
 {% endblock %}
 
 {% block content %}
-<div>
-    <h2>ACME Company</h1>
-    <p><b>123 Main office str, Atlanta, GA 30303</b></h3>
-    <p><b>Tel: 678-123-4567</b></p>
-    <h4><a href="#">(Change Location)</a></h4>
-</div>
-<div>
+<div class="container center">
+    <div>
+        <h1 class="text-primary">ACME Company</h1>
+        <p><b>123 Main office str, Atlanta, GA 30303</b></h3>
+        <p><b>Tel: 678-123-4567</b></p>
+        <h4><a href="#">(Change Location)</a></h4>
+    </div>
     <h3>Schedule Appointment</h2>
+    <div id='loading'>loading...</div>
+    <div id='calendar'></div>
 </div>
-<div id='loading'>loading...</div>
 
-<div id='calendar'></div>
 {% endblock %}

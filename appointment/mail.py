@@ -13,7 +13,7 @@ def send_appointment_mail(appointment):
         """
 
     email_from = settings.EMAIL_HOST_USER
-    RECIPIENT = appointment.contact.user.email   # Get user's email
+    RECIPIENT = appointment.email   # Get user's email
     recipient_list = [RECIPIENT, ]
 
     send_mail(subject, message, email_from, recipient_list)

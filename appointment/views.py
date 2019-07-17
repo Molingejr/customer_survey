@@ -6,10 +6,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
 from .forms import AppointmentForm
-from .models import Appointment, Contact
+from .models import Appointment
 from datetime import datetime
 from .mail import send_appointment_mail
 from .sms import send_appointment_sms
+import re
 
 def schedule_appointment(request):
    return render(request, 'schedule_appointment.html')
@@ -32,31 +33,21 @@ def save_appointment_details(request, schedule=None):
 
         # check whether it's valid and save it
         if form.is_valid():
-            try:
-                user = User.objects.get(email=form.data['email'])
-            except:
-                user = None
-
-            if not user:
-                # Register new user if user doesn't already exist
-                user = User(first_name=form.data['first_name'], last_name=form.data['last_name'],
-                    email=form.data['email'], username=(form.data['first_name']+form.data['last_name']).lower()
-                )
-                user.password = make_password(form.data['password'])
-                user.save()
-
-            # Create new contact details for the user
-            contact = Contact(mobilephone=form.data['mobilephone'], user=user)
-            contact.save()
-
-            # Save appointment details for the contact
-            start_time = request.GET['start_time'].split(" ")[0]
-            end_time = request.GET['end_time'].split(" ")[0]
+            # Save appointment details
+            start_time = request.GET['start_time'][:19]
+            end_time = request.GET['end_time'][:19]
+            #print(start_time, end_time)
+            start_time = datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S")
+            end_time=datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S")
+            print(start_time, end_time)
+            mobilephone = form.data['mobilephone']
+            email = form.data['email']
+            first_name = form.data['first_name']
+            last_name = form.data['last_name']
             notes = form.data['notes']
-            appointment = Appointment(start_time=datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S"), 
-                                      end_time=datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S"), notes=notes)
-            
-            appointment.contact = contact
+
+            appointment = Appointment(start_time=start_time, end_time=end_time, first_name=first_name, 
+                                      last_name=last_name, email=email, mobilephone=mobilephone, notes=notes)
             appointment.save()
             
             try:
