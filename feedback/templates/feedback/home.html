@@ -19,6 +19,7 @@
                 <p class="lead"><h4>Our goal is to ensure our users are well satisfied with our services</h4></p>
                 <div>
                     <a href="{% url "feedback:create_survey" %}"><button class="btn-large blue-grey">Create survey</button></a>
+                    <a href="{% url "appointment:calendar_list" %}"><button class="btn-large blue-grey">View Calendars</button></a>
                 </div>
             {% else %}
                 <h1 class="display-1">Customer Survey</h1>

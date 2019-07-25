@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+Calendar list
+{% endblock %}
+
+{% block header %}
+<style>
+    .container {
+        height: 600px;
+        position: relative;
+    }
+
+    .container-flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .item {
+        flex: 0 32%;
+        height: 100px;
+        margin-bottom: 2%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br /><br />
+    <h2>List of Calendars for appointments scheduling</h2>
+    <a href="{% url 'appointment:create_calendar' %}" class="btn btn-primary">Create Calendar</a><br/><br/>
+    <ul class="container-flex">
+        {% for calendar in calendar_list reversed %}
+        <li class="card item">
+            <div class="card-body">
+                <h4 class="card-title">{{calendar.provider_name}}</h4>
+                <div class="card-text">
+                    <p>Opening Time: {{ calendar.start_time }}</p>
+                    <p>Closing Time: {{ calendar.end_time }} </p>
+                    <p>Working Days: {{ calendar.working_days}}</p>
+                </div>
+                <a href="{% url 'appointment:calendar_view' calendar.id %}" class="btn btn-primary">View Details</a>
+            </div>
+        </li>
+        {% empty %}
+        <li>No calendars yet</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

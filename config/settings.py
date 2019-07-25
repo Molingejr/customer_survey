@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'crispy_forms',
+    'multiselectfield',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
