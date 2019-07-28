@@ -5,6 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from multiselectfield import MultiSelectField
 import json
 from datetime import datetime, timedelta
+from account.models import Company
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -39,6 +40,9 @@ class Calendar(models.Model):
     working_days = MultiSelectField(choices=BUSINESS_DAYS)
     start_time = models.TimeField()
     end_time = models.TimeField()
+    company = models.ForeignKey(
+        Company, on_delete=models.CASCADE, related_name='company'
+    )
 
     def __str__(self):
         return "{} {} {} - {}".format(self.provider_name, self.office_location, self.start_time, self.end_time)
@@ -55,10 +59,11 @@ class Calendar(models.Model):
             "pk": self.pk,
             "provider_name": str(self.provider_name),
             "office_location": str(self.office_location),
-            "slot_duration": str(self.slot_duration),#LazyEncoder().encode(self.slot_duration),
+            "slot_duration": str(self.slot_duration),#LazyEncoder().encode(self.sappointment/create_calendarlot_duration),
             "working_days": self.convert_to_numbers(str(self.working_days)),
             "start_time": LazyEncoder().encode(self.start_time).strip(r"\""),
-            "end_time": LazyEncoder().encode(self.end_time).strip(r"\"")
+            "end_time": LazyEncoder().encode(self.end_time).strip(r"\""),
+            "company": self.company
         }
 
 class Appointment(models.Model):

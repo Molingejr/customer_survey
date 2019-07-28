@@ -97,7 +97,7 @@ def delete_appointment(request, appointment_id):
     try:
         appointment = Appointment.objects.get(id=int(appointment_id))
     except:
-        return HttpResponse("No appointment with that ID exist")
+        return HttpResponse("No appointment with that ID exist"), 404
    
     appointment.delete()
     return HttpResponse("Successfully Deleted")
@@ -109,15 +109,19 @@ class CalendarListView(ListView):
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Calendar.objects.all()
-        return Calendar.objects.all()
+        return Calendar.objects.filter(company=self.request.user.company)
 
 
 def create_calendar(request):
     """Creates a customisable calendar"""
     if request.method == 'POST':
+
         form = CalendarForm(request.POST)
+        
         if form.is_valid():
-            form.save()
+            calendar = form.save(commit=False)  # prvent form from saving since we need to link company
+            calendar.company = request.user.company
+            calendar.save()
             return redirect('appointment:calendar_list')
     else:
         form = CalendarForm()

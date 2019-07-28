@@ -31,6 +31,7 @@ class CalendarForm(forms.ModelForm):
     class Meta:
         model = Calendar
         fields = ('provider_name', 'office_location', 'slot_duration', 'working_days', 'start_time', 'end_time')
+        exclude = ('company',)
         labels = {
             "provider_name": "Provider Name",
             "office_location": "Office Location",
