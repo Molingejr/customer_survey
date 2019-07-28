@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'multiselectfield',
+    'django_apscheduler'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

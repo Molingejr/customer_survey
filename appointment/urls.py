@@ -6,7 +6,6 @@ from . import views
 
 app_name = 'appointment'
 urlpatterns = [
-    path(r'appointment', views.schedule_appointment, name='schedule_appointment'),
     path(r'appointment/calendar/<calendar_id>/details', views.save_appointment_details, name='save_appointment_details'),
     path(r'appointment/calendar/<calendar_id>/complete', views.complete_appointment, name='complete_appointment'),
     path(r'appointment/create_calendar', login_required(views.create_calendar, 

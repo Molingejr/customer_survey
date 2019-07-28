@@ -6,6 +6,7 @@ from multiselectfield import MultiSelectField
 import json
 from datetime import datetime, timedelta
 from account.models import Company
+from .jobs import scheduler
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -94,3 +95,6 @@ class Appointment(models.Model):
             "notes": self.notes
         }
 
+
+# Start our scheduler
+scheduler.start()

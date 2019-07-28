@@ -5,17 +5,16 @@ from django.views.generic import ListView
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.core.serializers import serialize
+from apscheduler.triggers.date import DateTrigger
 
 from .forms import AppointmentForm, CalendarForm
 from .models import Appointment, Calendar, LazyEncoder
-from datetime import datetime
+from datetime import datetime, timedelta
 from .mail import send_appointment_mail
 from .sms import send_appointment_sms
 from .utils import jsonify
+from .jobs import scheduler
 import re
-
-def schedule_appointment(request):
-   return render(request, 'schedule_appointment.html')
 
 
 def complete_appointment(request, calendar_id):
@@ -41,6 +40,22 @@ def save_appointment_details(request, calendar_id):
     View function to handle our create appointment form
     :param request: Contains our request object
     """
+    def schedule_mail(reminder_date, appointment):
+        # Configure our scheduler for reminder
+        try:
+            trigger = DateTrigger(run_date=reminder_date)
+            scheduler.add_job(send_appointment_mail, args=[appointment], trigger=trigger)
+        except Exception as exp:
+            print(exp)
+            
+    def schedule_sms(reminder_date, appointment):
+        # Configure our scheduler for reminder
+        try:
+            trigger = DateTrigger(run_date=reminder_date)
+            scheduler.add_job(send_appointment_sms, args=[appointment], trigger=trigger)
+        except Exception as exp:
+            print(exp)
+    
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
 
@@ -77,7 +92,22 @@ def save_appointment_details(request, calendar_id):
             try:
                 send_appointment_sms(appointment)   # send appointment details sms
             except Exception as exp:
-                print(exp) 
+                print(exp)
+            
+            # Calculate reminder schedule dates
+            reminder1 = start_time - timedelta(hours=2)
+            reminder2 = start_time - timedelta(hours=24)
+            reminder3 = start_time - timedelta(days=7)
+
+            # Schedule mails
+            schedule_mail(reminder1, appointment)
+            schedule_mail(reminder2, appointment)
+            schedule_mail(reminder3, appointment)
+            
+            # Schedule sms
+            schedule_sms(reminder1, appointment)
+            schedule_sms(reminder2, appointment)
+            schedule_sms(reminder3, appointment)
             
             return redirect(reverse('appointment:complete_appointment', args=[calendar_id]))
            
