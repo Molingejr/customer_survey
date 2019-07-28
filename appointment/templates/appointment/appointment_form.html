@@ -23,11 +23,12 @@
 {% block content %}
 <div>
     <h2 class="text-primary">ACME Company</h1>
-    <p><b>123 Main office str, Atlanta, GA 30303</b></h3>
+    <p><b>{{office_location}}</b></h3>
     <p><b>Tel: 678-123-4567</b></p>
     <h4><a href="#">(Change Location)</a></h4>
 </div>
-    <h4>Great, now just enter your contact details</h4>
+    <h6>Great, now just enter your contact details below to finish setting up your appointment for: </h6>
+    <p>{{start_time|date:"DATETIME_FORMAT"}} to {{end_time|date:"DATETIME_FORMAT"}}</p>
     <br/>
     <div>
         <form method="POST" >

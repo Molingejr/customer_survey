@@ -18,12 +18,17 @@ import re
 
 
 def complete_appointment(request, calendar_id):
+    """Render view to show appointment has been scheduled successfully
+    :param calendar_id: ID of the calendar which appointment belongs to
+    """
     calendar = Calendar.objects.get(pk=calendar_id)
     return render(request, 'complete_appointment.html', {'calendar': calendar})
 
 
 def calendar_view(request, calendar_id):
-    """View a customized calendar"""
+    """View a customized calendar
+    :param calendar_id: ID of the calendar which appointment belongs to
+    """
     calendar_obj = Calendar.objects.get(pk=calendar_id)
     try:
         appointments = Appointment.objects.all().filter(calendar=calendar_obj)
@@ -39,6 +44,7 @@ def save_appointment_details(request, calendar_id):
     """
     View function to handle our create appointment form
     :param request: Contains our request object
+    :param calendar_id: ID of the calendar which appointment belongs to
     """
     def schedule_mail(reminder_date, appointment):
         # Configure our scheduler for reminder
@@ -56,6 +62,13 @@ def save_appointment_details(request, calendar_id):
         except Exception as exp:
             print(exp)
     
+    start_time = request.GET['start_time'][:19]
+    end_time = request.GET['end_time'][:19]
+     
+    start_time = datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S")
+    end_time=datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S")
+    
+    calendar_obj = Calendar.objects.get(pk=calendar_id)
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
 
@@ -65,11 +78,6 @@ def save_appointment_details(request, calendar_id):
         # check whether it's valid and save it
         if form.is_valid():
             # Save appointment details
-            start_time = request.GET['start_time'][:19]
-            end_time = request.GET['end_time'][:19]
-            #print(start_time, end_time)
-            start_time = datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S")
-            end_time=datetime.strptime(end_time, "%Y-%m-%dT%H:%M:%S")
             
             mobilephone = form.data['mobilephone']
             email = form.data['email']
@@ -80,7 +88,6 @@ def save_appointment_details(request, calendar_id):
             appointment = Appointment(start_time=start_time, end_time=end_time, first_name=first_name, 
                                       last_name=last_name, email=email, mobilephone=mobilephone, notes=notes)
             
-            calendar_obj = Calendar.objects.get(pk=calendar_id)
             appointment.calendar = calendar_obj
             appointment.save()
 
@@ -114,12 +121,15 @@ def save_appointment_details(request, calendar_id):
     # if a GET (or any other method) we'll create a blank form
     else:
         form = AppointmentForm()
-    return render(request, 'appointment_form.html', {'form': form})
+    return render(request, 'appointment_form.html', {'form': form, 'start_time': start_time, 'end_time': end_time,
+                                                     'office_location': calendar_obj.office_location})
 
 
 def delete_appointment(request, appointment_id):
-    #data = request.get_json()
-    appointment_id = appointment_id#data.get("appointment_id")
+    """Delete an appointment from the appointment table
+    :param appointment_id: ID of the appointment
+    """
+    appointment_id = appointment_id
 
     if not appointment_id:
         return HttpResponse("Please provide an appointment Id"), 406

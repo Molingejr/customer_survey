@@ -33,6 +33,7 @@
         calAppointments = JSON.parse(calAppointments);
         let eventList = [];
 
+        // check if user is authenticated or not
         var auth_status = {{ user.is_authenticated|yesno:"true,false" }};
         
         if (auth_status){
@@ -54,7 +55,7 @@
                 eventList.push(ev);
             });
         }
-        console.log(eventList);
+       
         // Create calendar object and render it
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -113,7 +114,7 @@
 
 
             select: function (info) {
-                if (confirm("Schedule an Appointment here!" + info.startStr + ' to ' + info.endStr)) {
+                if (confirm("Schedule an Appointment here!\n" + info.start + ' to\n' + info.end)) {
                     let date_str = info.startStr + "," + info.endStr;
                     let calendar_id = '{{calendar_obj.pk}}'
                     let url = "/appointment/calendar"
