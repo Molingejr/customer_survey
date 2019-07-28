@@ -32,15 +32,29 @@
         let calAppointments = '{{appointments}}'.replace(/&quot;/g, "\"");
         calAppointments = JSON.parse(calAppointments);
         let eventList = [];
-        calAppointments.map(appointment => {
-            let ev = {
-                id: appointment.pk,
-                title: `${appointment.fields.first_name} ${appointment.fields.last_name}`,
-                start: appointment.fields.start_time
-            };
-            eventList.push(ev);
-        });
 
+        var auth_status = {{ user.is_authenticated|yesno:"true,false" }};
+        
+        if (auth_status){
+            calAppointments.map(appointment => {
+                let ev = {
+                    id: appointment.pk,
+                    title: `${appointment.fields.first_name} ${appointment.fields.last_name}`,
+                    start: appointment.fields.start_time
+                };
+                eventList.push(ev);
+            });
+        }else{
+            calAppointments.map(appointment => {
+                let ev = {
+                    id: appointment.pk,
+                    title: "BOOKED",
+                    start: appointment.fields.start_time
+                };
+                eventList.push(ev);
+            });
+        }
+        console.log(eventList);
         // Create calendar object and render it
         var calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -73,30 +87,28 @@
             selectable: true,
 
             eventClick: function (info) {
-                // alert('Event: ' + info.event.title);
+                if (auth_status){
+                    let message = `User: ${info.event.title} \n Start: ${info.event.start}`
+                    $('.modal-body').text(message);
+                    $('#calModal').modal('show');
+                    $('#appointment-delete').click(() => {
+                        $.ajax({
+                            type: "POST",
+                            url: `/appointment/${info.event.id}`,
+                            contentType: "application/json; charset=utf-8",
+                            crossDomain: true,
+                            headers: { "X-CSRFToken": "{{csrf_token}}" },
+                            success: function (result, status, xhr) {
+                                $(".modal-body").text(result);
+                                info.event.remove();
+                            },
+                            error: function (xhr, status, error) {
+                                $(".modal-body").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                            }
+                        });
 
-                // // change the border color just for fun
-                // info.el.style.borderColor = 'red';
-                let message = `User: ${info.event.title} \n Start: ${info.event.start}`
-                $('.modal-body').text(message);
-                $('#calModal').modal('show');
-                $('#appointment-delete').click(() => {
-                    $.ajax({
-                        type: "POST",
-                        url: `/appointment/${info.event.id}`,
-                        contentType: "application/json; charset=utf-8",
-                        crossDomain: true,
-                        headers: { "X-CSRFToken": "{{csrf_token}}" },
-                        success: function (result, status, xhr) {
-                            $(".modal-body").text(result);
-                            info.event.remove();
-                        },
-                        error: function (xhr, status, error) {
-                            $(".modal-body").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-                        }
-                    });
-
-                })
+                    })
+                }     
             },
 
 

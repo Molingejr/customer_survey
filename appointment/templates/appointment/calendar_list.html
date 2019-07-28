@@ -28,7 +28,10 @@ Calendar list
 <div class="container">
     <br /><br />
     <h2>List of Calendars for appointments scheduling</h2>
-    <a href="{% url 'appointment:create_calendar' %}" class="btn btn-primary">Create Calendar</a><br/><br/>
+    {% if user.is_superuser %}
+    {% elif user.is_authenticated %}
+        <a href="{% url 'appointment:create_calendar' %}" class="btn btn-primary">Create Calendar</a><br/><br/>
+    {% endif%}
     <ul class="container-flex">
         {% for calendar in calendar_list reversed %}
         <li class="card item">

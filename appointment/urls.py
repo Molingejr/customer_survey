@@ -13,8 +13,7 @@ urlpatterns = [
                                                         login_url='account:log_in'), name='create_calendar'),
     path('appointment/calendar', login_required(views.CalendarListView.as_view(),
                                                 login_url='account:log_in'), name='calendar_list'),
-    path('appointment/calendar/<calendar_id>', login_required(views.calendar_view,
-                                                login_url='account:log_in'), name='calendar_view'),
+    path('appointment/calendar/<calendar_id>', views.calendar_view, name='calendar_view'),
     path('appointment/<appointment_id>', login_required(views.delete_appointment,
                                                 login_url='account:log_in'), name='delete_appointment')
 ]
