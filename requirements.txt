@@ -18,3 +18,5 @@ django-bootstrap4==4.0.0.8
 django-multiselectfield==0.1.8
 apscheduler==3.6.1
 django-apscheduler==0.3.0
+selenium==3.141.0
+coverage==4.5.4

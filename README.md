@@ -85,3 +85,20 @@ Then login into to our survey application with the superuser credentials. Enjoy 
 Such Facilities involves:
 - View all registered company
 - View all customers in the database
+
+
+## Test Suite
+The tool used here is Selenium. Thus a set of functional requirements are tested using browser automation.
+
+### How to run
+- First you need to download the selenium driver for Chrome or Firefox. Make sure to download the driver version which is compatible with your current browser version.
+Chrome is what's used in the current implementation but you can change it.
+- Place the driver in the `driver` directory in the root folder `driver/chromedriver` this path is placed in the `CHROME_DRIVER_PATH` variable in each
+app's `tests.py` file. So you can still change the path if you wish or change the driver entirely and use something like 
+```
+FIREFOX_DRIVER_PATH = 'driver/geckodriver'
+...
+def setUp(self):
+        self.driver = webdriver.Firefox(executable_path=FIREFOX_DRIVER_PATH)
+```
+- You can Run test for each app using `python manage.py test app_name.tests`
