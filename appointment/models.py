@@ -67,6 +67,7 @@ class Calendar(models.Model):
             "company": self.company
         }
 
+
 class Appointment(models.Model):
     """Holds our appointment details"""
     start_time = models.DateTimeField()

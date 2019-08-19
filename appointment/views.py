@@ -142,6 +142,7 @@ def delete_appointment(request, appointment_id):
     appointment.delete()
     return HttpResponse("Successfully Deleted")
 
+
 class CalendarListView(ListView):
     """Render Calendar list"""
     model = Calendar
